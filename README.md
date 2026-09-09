@@ -61,8 +61,9 @@ Backstage Techlab - Verification
 [OK]      npm (10.x.x)
 [OK]      yarn (1.x.x)
 [OK]      backstage cli (11.x.x)
+[OK]      workspace write access
 ---------------------------------
-All four lines must show [OK] before starting the lab.
+All five lines must show [OK] before starting the lab.
 ```
 
 ### Manual verification steps
@@ -81,9 +82,12 @@ yarn --version
 
 # Check npm registry reachability (fetches @backstage/create-app version)
 npx -y @backstage/create-app --version
+
+# Write access: create file
+touch write-test
 ```
 
-All commands must return a version number without errors.
+All commands must return a reasonable result and have no errors.
 
 ### Troubleshooting
 
@@ -93,7 +97,7 @@ All commands must return a version number without errors.
 If any check shows `[MISSING]`, copy the terminal output or take a screenshot and send it to the address provided in your training invitation email so it can be resolved before the lab starts.
 
 
-#### Windows: File Permission Issues
+#### Windows and WSL
 
 On Windows, Dev Containers run via WSL2. If the container has no write permissions, this is usually caused by a mismatch between the Windows host filesystem and the Linux user inside the container.
 
@@ -107,11 +111,12 @@ Verify it works by running in the container terminal:
 touch test.txt
 ```
 
-If the file is created without error, the move was successful.
+If the file is created without error, the move was successful. If not, got to next section.
 
-**2. Fix ownership inside the container**
 
-As a quick fix, open the terminal inside the Dev Container and transfer ownership of the workspace directory to your current user:
+#### No write permissions
+
+Fix ownership inside the container. Open the terminal inside the Dev Container and transfer ownership of the workspace directory to your current user:
 
 ```bash
 sudo chown -R $(whoami) /workspace
