@@ -87,7 +87,36 @@ All commands must return a version number without errors.
 
 ### Troubleshooting
 
-If any check shows `[MISSING]`, take a screenshot of the terminal output and send it to the address provided in your training invitation email so it can be resolved before the lab starts.
+
+#### Verify fails
+
+If any check shows `[MISSING]`, copy the terminal output or take a screenshot and send it to the address provided in your training invitation email so it can be resolved before the lab starts.
+
+
+#### Windows: File Permission Issues
+
+On Windows, Dev Containers run via WSL2. If the container has no write permissions, this is usually caused by a mismatch between the Windows host filesystem and the Linux user inside the container.
+
+**1. Move your project into the WSL2 filesystem (recommended)**
+
+If your project is located on the Windows filesystem (`C:\` / `/mnt/c/`), permission conflicts are common. Clone or move the project directly into the WSL2 filesystem (e.g. `~/projects/my-project`) and open the Dev Container from there in VS Code: `code .`
+
+Verify it works by running in the container terminal:
+
+```bash
+touch test.txt
+```
+
+If the file is created without error, the move was successful.
+
+**2. Fix ownership inside the container**
+
+As a quick fix, open the terminal inside the Dev Container and transfer ownership of the workspace directory to your current user:
+
+```bash
+sudo chown -R $(whoami) /workspace
+```
+
 
 ## Links
 
